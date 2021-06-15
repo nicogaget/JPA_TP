@@ -2,6 +2,7 @@ package com.tp.tp_spring_jpa_mysql.Controllers;
 
 import com.tp.tp_spring_jpa_mysql.dtos.GetClientDTO;
 import com.tp.tp_spring_jpa_mysql.models.Client;
+import com.tp.tp_spring_jpa_mysql.models.Commande;
 import com.tp.tp_spring_jpa_mysql.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.Optional;
 public class ClientController {
     @Autowired
     private ClientService service;
+
 
     @GetMapping("")
     public List<GetClientDTO> findAll() {
@@ -30,6 +32,7 @@ public class ClientController {
     public Optional<Client> findByNom(@PathVariable String name) {
         return service.findByNom(name);
     }
+
 
     @PostMapping
     public Client save(@RequestBody Client client) {

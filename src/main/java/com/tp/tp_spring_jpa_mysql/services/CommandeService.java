@@ -16,11 +16,12 @@ public class CommandeService {
 
 
     private final ObjectMapper mapper;
-    private JpaRepository<Commande, Integer> repository;
+    private JpaRepository<Commande, Integer> commandeJpaRepository;
+
 
 
     public CommandeService(JpaRepository<Commande, Integer> repository, ObjectMapper mapper) {
-        this.repository = repository;
+        this.commandeJpaRepository = repository;
         this.mapper=mapper;
 
     }
@@ -30,7 +31,7 @@ public class CommandeService {
 
 
     public List<GetCommandeDTO> findAll() {
-        List<Commande> commandes = this.repository.findAll();
+        List<Commande> commandes = this.commandeJpaRepository.findAll();
         List<GetCommandeDTO> getCommandeDTOS = new ArrayList<>();
         commandes.forEach( commande -> {
             getCommandeDTOS.add(
@@ -39,13 +40,20 @@ public class CommandeService {
         });
         return getCommandeDTOS;
     }
-    public List<Commande> findByClient(Optional<Client> client){
 
-        return this.commandeRepository.findByClient(client);
+    public List<GetCommandeDTO>findByClient(Optional<Client> client){
+        List<Commande> commandes = commandeRepository.findByClient(client);
+        List<GetCommandeDTO> getCommandeDTOS = new ArrayList<>();
+        commandes.forEach( commande -> {
+            getCommandeDTOS.add(
+                    this.mapper.convertValue(commande, GetCommandeDTO.class )
+            );
+        });
+        return getCommandeDTOS;
     }
 
     public Optional<Commande> findById(int id) {
-        return this.repository.findById(id);
+        return this.commandeJpaRepository.findById(id);
     }
 
     public Optional<Commande> findByNom(int id) {

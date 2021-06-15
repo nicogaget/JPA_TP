@@ -8,7 +8,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class GetCommandeDTO {
-    private int id;
+
+    private GetClientDTO client;
     private List<GetProduitDTO> produits;
 
 }
